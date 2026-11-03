@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After School Activities</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <h1>{{message}}</h1>
+        <p>Find and book after school classes and activities</p>
+        <h2>Available Lessons</h2>
+        <label for="sortBy">Sort By:</label>
+        <select id="sortBy" v-model="sortBy">
+            <option value="subject">Subject</option>
+            <option value="location">Location</option>
+            <option value="price">Price</option>
+            <option value="spaces">Available Spaces</option>
+        </select>
+        <label for="sortOrder">Sort Order:</label>
+        <select id="sortOrder" v-model="sortOrder">
+            <option value="ascending">Ascending</option>
+            <option value="descending">Descending</option>
+        </select>
+        <div v-for="lesson in sortedLessons" :key="lesson.id">
+            <i :class="['fa',lesson.icon]" aria-hidden="true"></i>
+            <h3>{{lesson.subject}}</h3>
+            <p>Location: {{lesson.location}}</p>
+            <p>Price:Rs {{lesson.price}}</p>
+            <p>Available Spaces: {{lesson.spaces}}</p>
+            <button @click="addToCart(lesson)" :disabled="lesson.spaces===0">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+    <script>
+        const {createApp}=Vue;
+        const afterSchoolApp=createApp({
+            data(){
+                return{
+                    message:"Welcome to After School Activities",
+                    sortBy:"subject",
+                    sortOrder:"ascending",
+                    shoppingCart:[],
+
+                    lessons:[
+                        {id:1,subject:"Mathematics",location:"Port Louis",price:500,spaces:5,icon:"fa-calculator"},
+                        {id:2,subject:"English",location:"Pamplemousses",price:450,spaces:5,icon:"fa-book"},
+                        {id:3,subject:"French",location:"Riviere Du Rempart",price:450,spaces:5,icon:"fa-book"},
+                        {id:4,subject:"Additional Mathematics",location:"Flacq",price:500,spaces:5,icon:"fa-calculator"},
+                        {id:5,subject:"Accounting",location:"Grand Port",price:800,spaces:5,icon:"fa-money"},
+                        {id:6,subject:"Business Studies",location:"Savanne",price:600,spaces:5,icon:"fa-briefcase"},
+                        {id:7,subject:"Computer Science",location:"Black River",price:1200,spaces:5,icon:"fa-laptop"},
+                        {id:8,subject:"Economics",location:"Moka",price:700,spaces:5,icon:"fa-line-chart"},
+                        {id:9,subject:"Physics",location:"Plaines Wilhems",price:900,spaces:5,icon:"fa-flask"},
+                        {id:10,subject:"Cooking",location:"Ail Dore",price:300,spaces:5,icon:"fa-cutlery"},
+                    ]
+                };
+            },
+            computed:{
+                sortedLessons(){
+                    let lessonsCopy=this.lessons.slice();
+                    return lessonsCopy.sort((lessonA,lessonB)=>{
+                        let firstValue=lessonA[this.sortBy];
+                        let secondValue=lessonB[this.sortBy];
+
+                        if(typeof firstValue==="string"){
+                            firstValue=firstValue.toLowerCase();
+                            secondValue=secondValue.toLowerCase();
+                        }
+
+                        if(this.sortOrder==="ascending"){
+                            if(firstValue<secondValue) return -1;
+                            if (firstValue>secondValue) return 1;
+                        }else{
+                            if (firstValue>secondValue) return -1;
+                            if (firstValue < secondValue) return 1;
+                        }
+                        return 0;
+                    });
+                }
+            },
+            methods:{
+                addToCart(lesson){
+                    if (lesson.spaces>0){
+                        this.shoppingCart.push(lesson.id);
+                        lesson.spaces=lesson.spaces-1;
+                    }
+                }
+            }
+        });
+        afterSchoolApp.mount("#app")
+    </script>
+</body>
+</html>
