@@ -47,7 +47,11 @@
         </div>
         <div v-else>
             <h2>Shopping Cart</h2>
-            <p>Your selected lessons will appear here.</p>
+            <div v-for="(lesson,index) in cartLessons" :key="index">
+                <h3>{{lesson.subject}}</h3>
+                <p>Location: {{lesson.location}}</p>
+                <p>Price: Rs {{lesson.price}}</p>
+            </div>
         </div>
     </div>
     <script>
@@ -96,6 +100,18 @@
                         }
                         return 0;
                     });
+                },
+                cartLessons(){
+                    let selectedLessons=[];
+                    for (let lessonId of this.shoppingCart){
+                        let selectedLesson=this.lessons.find(function(lesson){
+                            return lesson.id===lessonId;
+                        });
+                        if(selectedLesson){
+                            selectedLessons.push(selectedLesson);
+                        }
+                    }
+                    return selectedLessons;
                 }
             },
             methods:{
