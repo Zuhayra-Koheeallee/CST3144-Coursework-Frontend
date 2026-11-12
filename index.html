@@ -51,6 +51,9 @@
                 <h3>{{lesson.subject}}</h3>
                 <p>Location: {{lesson.location}}</p>
                 <p>Price: Rs {{lesson.price}}</p>
+                <button @click="removeFromCart(lesson,index)">
+                    Remove from Cart
+                </button>
             </div>
         </div>
     </div>
@@ -123,6 +126,15 @@
                 },
                 toggleShoppingCart(){
                     this.showLessons=!this.showLessons;
+                },
+                removeFromCart(lesson,index){
+                    this.shoppingCart.splice(index,1);
+                    let originalLesson=this.lessons.find(function(originalLesson){
+                        return originalLesson.id===lesson.id;
+                    });
+                    if(originalLesson){
+                        originalLesson.spaces=originalLesson.spaces+1;
+                    }
                 }
             }
         });
