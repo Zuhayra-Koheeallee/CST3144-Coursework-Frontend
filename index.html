@@ -12,6 +12,9 @@
     <div id="app">
         <h1>{{message}}</h1>
         <p>Find and book after school classes and activities</p>
+        <button :disabled="shoppingCart.length === 0">
+            Shopping Cart ({{shoppingCart.length}})
+        </button>
         <h2>Available Lessons</h2>
         <label for="sortBy">Sort By:</label>
         <select id="sortBy" v-model="sortBy">
