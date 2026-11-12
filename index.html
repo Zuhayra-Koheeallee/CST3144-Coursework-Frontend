@@ -12,31 +12,42 @@
     <div id="app">
         <h1>{{message}}</h1>
         <p>Find and book after school classes and activities</p>
-        <button :disabled="shoppingCart.length === 0">
-            Shopping Cart ({{shoppingCart.length}})
+        <button v-if="showLessons" @click="toggleShoppingCart" :disabled="shoppingCart.length === 0">
+            View Shopping Cart ({{shoppingCart.length}})
         </button>
-        <h2>Available Lessons</h2>
-        <label for="sortBy">Sort By:</label>
-        <select id="sortBy" v-model="sortBy">
-            <option value="subject">Subject</option>
-            <option value="location">Location</option>
-            <option value="price">Price</option>
-            <option value="spaces">Available Spaces</option>
-        </select>
-        <label for="sortOrder">Sort Order:</label>
-        <select id="sortOrder" v-model="sortOrder">
-            <option value="ascending">Ascending</option>
-            <option value="descending">Descending</option>
-        </select>
-        <div v-for="lesson in sortedLessons" :key="lesson.id">
-            <i :class="['fa',lesson.icon]" aria-hidden="true"></i>
-            <h3>{{lesson.subject}}</h3>
-            <p>Location: {{lesson.location}}</p>
-            <p>Price:Rs {{lesson.price}}</p>
-            <p>Available Spaces: {{lesson.spaces}}</p>
-            <button @click="addToCart(lesson)" :disabled="lesson.spaces===0">
-                Add to Cart
-            </button>
+        <button v-else @click="toggleShoppingCart">
+            Back to Lessons ({{shoppingCart.length}})
+        </button>
+
+        <div v-if="showLessons">
+            <h2>Available Lessons</h2>
+            <label for="sortBy">Sort By:</label>
+
+            <select id="sortBy" v-model="sortBy">
+                <option value="subject">Subject</option>
+                <option value="location">Location</option>
+                <option value="price">Price</option>
+                <option value="spaces">Available Spaces</option>
+            </select>
+            <label for="sortOrder">Sort Order:</label>
+            <select id="sortOrder" v-model="sortOrder">
+                <option value="ascending">Ascending</option>
+                <option value="descending">Descending</option>
+            </select>
+            <div v-for="lesson in sortedLessons" :key="lesson.id">
+                <i :class="['fa',lesson.icon]" aria-hidden="true"></i>
+                <h3>{{lesson.subject}}</h3>
+                <p>Location: {{lesson.location}}</p>
+                <p>Price:Rs {{lesson.price}}</p>
+                <p>Available Spaces: {{lesson.spaces}}</p>
+                <button @click="addToCart(lesson)" :disabled="lesson.spaces===0">
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+        <div v-else>
+            <h2>Shopping Cart</h2>
+            <p>Your selected lessons will appear here.</p>
         </div>
     </div>
     <script>
@@ -48,6 +59,7 @@
                     sortBy:"subject",
                     sortOrder:"ascending",
                     shoppingCart:[],
+                    showLessons:true,
 
                     lessons:[
                         {id:1,subject:"Mathematics",location:"Port Louis",price:500,spaces:5,icon:"fa-calculator"},
@@ -92,6 +104,9 @@
                         this.shoppingCart.push(lesson.id);
                         lesson.spaces=lesson.spaces-1;
                     }
+                },
+                toggleShoppingCart(){
+                    this.showLessons=!this.showLessons;
                 }
             }
         });
