@@ -55,7 +55,15 @@
                     Remove from Cart
                 </button>
             </div>
+
+            <h2>Checkout</h2>
+            <label for="customerName">Name:</label>
+            <input type="text" id="customerName" v-model="customerName" placeholder="Enter your name">
+            <label for="customerPhone">Phone Number</label>
+            <input type="text" id="customerPhone" v-model="customerPhone" placeholder="Enter your phone number">
+            <button :disabled="!validName || !validPhone || shoppingCart.length === 0">Checkout</button>
         </div>
+        
     </div>
     <script>
         const {createApp}=Vue;
@@ -67,6 +75,8 @@
                     sortOrder:"ascending",
                     shoppingCart:[],
                     showLessons:true,
+                    customerName:"",
+                    customerPhone:"",
 
                     lessons:[
                         {id:1,subject:"Mathematics",location:"Port Louis",price:500,spaces:5,icon:"fa-calculator"},
@@ -115,6 +125,12 @@
                         }
                     }
                     return selectedLessons;
+                },
+                validName(){
+                    return /^[A-Za-z ]+$/.test(this.customerName.trim());
+                },
+                validPhone(){
+                    return /^[0-9]+$/.test(this.customerPhone);
                 }
             },
             methods:{
