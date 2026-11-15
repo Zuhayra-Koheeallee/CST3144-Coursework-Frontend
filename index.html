@@ -61,7 +61,8 @@
             <input type="text" id="customerName" v-model="customerName" placeholder="Enter your name">
             <label for="customerPhone">Phone Number</label>
             <input type="text" id="customerPhone" v-model="customerPhone" placeholder="Enter your phone number">
-            <button :disabled="!validName || !validPhone || shoppingCart.length === 0">Checkout</button>
+            <button @click="checkout" :disabled="!validName || !validPhone || shoppingCart.length === 0">Checkout</button>
+            <p v-if="orderConfirmed">Order confirmed! Thank you for your booking.</p>
         </div>
         
     </div>
@@ -77,6 +78,7 @@
                     showLessons:true,
                     customerName:"",
                     customerPhone:"",
+                    orderConfirmed:false,
 
                     lessons:[
                         {id:1,subject:"Mathematics",location:"Port Louis",price:500,spaces:5,icon:"fa-calculator"},
@@ -138,6 +140,7 @@
                     if (lesson.spaces>0){
                         this.shoppingCart.push(lesson.id);
                         lesson.spaces=lesson.spaces-1;
+                        this.orderConfirmed=false;
                     }
                 },
                 toggleShoppingCart(){
@@ -150,6 +153,14 @@
                     });
                     if(originalLesson){
                         originalLesson.spaces=originalLesson.spaces+1;
+                    }
+                },
+                checkout(){
+                    if(this.validName && this.validPhone && this.shoppingCart.length>0){
+                        this.orderConfirmed=true;
+                        this.shoppingCart=[];
+                        this.customerName="";
+                        this.customerPhone="";
                     }
                 }
             }
