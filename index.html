@@ -64,7 +64,7 @@
             <h2>Checkout</h2>
             <div>
                 <label for="customerName">Name:</label>
-                <p v-if="!validName" class="error-message">
+                <p v-if="!validName && !orderConfirmed" class="error-message">
                     Please enter a valid name using letters only.
                 </p>
                 <input type="text" id="customerName" 
@@ -74,7 +74,7 @@
 
             <div>
                 <label for="customerPhone">Phone Number</label>
-                <p v-if="!validPhone" class="error-message">
+                <p v-if="!validPhone && !orderConfirmed"class="error-message">
                     Please enter a valid phone number using numbers only.
                 </p>
                 <input type="text" id="customerPhone" 
@@ -178,12 +178,31 @@
                         originalLesson.spaces=originalLesson.spaces+1;
                     }
                 },
-                checkout(){
+                async checkout(){
                     if(this.validName && this.validPhone && this.shoppingCart.length>0){
-                        this.orderConfirmed=true;
-                        this.shoppingCart=[];
-                        this.customerName="";
-                        this.customerPhone="";
+                        let order={
+                            name:this.customerName,
+                            phone:this.customerPhone,
+                            lessonIDs:this.shoppingCart,
+                            spaces:this.shoppingCart.length
+                        };
+                        const url="http://localhost:3000/orders";
+                        let response=await fetch(url,{
+                            method:"POST",
+                            headers:{
+                                "Content-Type":"application/json"
+                            },
+                            body:JSON.stringify(order)
+                        });
+                        if(response.ok ===true){
+                            this.orderConfirmed=true;
+                            this.shoppingCart=[];
+                            this.customerName="";
+                            this.customerPhone="";
+                        }else{
+                            alert("Error saving your order.");
+                        }
+                            
                     }
                 },
                 async fetchData(){
