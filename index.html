@@ -35,9 +35,11 @@
                 <option value="descending">Descending</option>
             </select>
             <div v-for="lesson in sortedLessons" v-bind:key="lesson.id">
-                <figure>
-                    <img v-bind:src="lesson.image" v-bind:alt="lesson.subject" width="300">
-                </figure>
+                <img
+                    :src="'http://localhost:3000' + lesson.image"
+                    :alt="lesson.subject"
+                    style="width: 300px; height: 170px; object-fit: cover;"
+                />
                 <i v-bind:class="['fa',lesson.icon]" aria-hidden="true"></i>
                 <h3>{{lesson.subject}}</h3>
                 <p>Location: {{lesson.location}}</p>
