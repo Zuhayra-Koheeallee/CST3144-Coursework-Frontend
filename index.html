@@ -12,10 +12,10 @@
     <div id="app">
         <h1>{{message}}</h1>
         <p>Find and book after school classes and activities</p>
-        <button v-if="showLessons" @click="toggleShoppingCart" :disabled="shoppingCart.length === 0">
+        <button v-if="showLessons" v-on:click="toggleShoppingCart" v-bind:disabled="shoppingCart.length === 0">
             View Shopping Cart ({{shoppingCart.length}})
         </button>
-        <button v-else @click="toggleShoppingCart">
+        <button v-else v-on:click="toggleShoppingCart">
             Back to Lessons ({{shoppingCart.length}})
         </button>
 
@@ -34,26 +34,26 @@
                 <option value="ascending">Ascending</option>
                 <option value="descending">Descending</option>
             </select>
-            <div v-for="lesson in sortedLessons" :key="lesson.id">
-                <i :class="['fa',lesson.icon]" aria-hidden="true"></i>
+            <div v-for="lesson in sortedLessons" v-bind:key="lesson.id">
+                <i v-bind:class="['fa',lesson.icon]" aria-hidden="true"></i>
                 <h3>{{lesson.subject}}</h3>
                 <p>Location: {{lesson.location}}</p>
                 <p>Price:Rs {{lesson.price}}</p>
                 <p>Available Spaces: {{lesson.spaces}}</p>
                 <p>Teacher: {{lesson.teacher}}</p>
-                <button @click="addToCart(lesson)" :disabled="lesson.spaces===0">
+                <button v-on:click="addToCart(lesson)" v-bind:disabled="lesson.spaces===0">
                     Add to Cart
                 </button>
             </div>
         </div>
         <div v-else>
             <h2>Shopping Cart</h2>
-            <div v-for="(lesson,index) in cartLessons" :key="index">
+            <div v-for="(lesson,index) in cartLessons" v-bind:key="index">
                 <h3>{{lesson.subject}}</h3>
                 <p>Location: {{lesson.location}}</p>
                 <p>Price: Rs {{lesson.price}}</p>
                 <p>Teacher: {{lesson.teacher}}</p>
-                <button @click="removeFromCart(lesson,index)">
+                <button v-on:click="removeFromCart(lesson,index)">
                     Remove from Cart
                 </button>
             </div>
@@ -63,7 +63,7 @@
             <input type="text" id="customerName" v-model="customerName" placeholder="Enter your name">
             <label for="customerPhone">Phone Number</label>
             <input type="text" id="customerPhone" v-model="customerPhone" placeholder="Enter your phone number">
-            <button @click="checkout" :disabled="!validName || !validPhone || shoppingCart.length === 0">Checkout</button>
+            <button v-on:click="checkout" v-bind:disabled="!validName || !validPhone || shoppingCart.length === 0">Checkout</button>
             <p v-if="orderConfirmed">Order confirmed! Thank you for your booking.</p>
         </div>
         
