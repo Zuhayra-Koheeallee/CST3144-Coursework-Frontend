@@ -1,0 +1,229 @@
+/* General page styling */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    color: #263238;
+    margin: 0;
+    padding: 25px;
+}
+
+/* Main application */
+#app {
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* Main heading */
+h1 {
+    background-color: #17365d;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+#app > p {
+    text-align: center;
+    color: #64748b;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+/* Section headings */
+h2 {
+    color: #17365d;
+    border-bottom: 2px solid #dbe3ed;
+    padding-bottom: 12px;
+    margin-top: 30px;
+}
+
+h3 {
+    color: #17365d;
+    margin-top: 12px;
+}
+
+/* Buttons */
+button {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #1d4ed8;
+}
+
+/* Disabled buttons */
+button:disabled {
+    background-color: #cbd5e1;
+    color: #64748b;
+    cursor: not-allowed;
+}
+
+/* Sorting controls */
+label {
+    font-weight: bold;
+    color: #334155;
+}
+
+select {
+    padding: 10px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    background-color: white;
+    font-size: 14px;
+    margin: 10px 20px 20px 5px;
+    cursor: pointer;
+}
+
+/* Lesson cards */
+#app > div > div:has(> i.fa) {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(33.33% - 16px);
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 22px;
+    margin: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s;
+}
+
+#app > div > div:has(> i.fa):hover {
+    transform: translateY(-4px);
+}
+
+/* Font Awesome icons */
+.fa {
+    font-size: 30px;
+    color: #2563eb;
+    background-color: #eff6ff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Lesson information */
+p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Add to Cart button */
+#app > div > div:has(> i.fa) > button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Shopping cart cards */
+#app > div > div:has(> h3):not(:has(> i.fa)) {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Remove from Cart button */
+#app > div > div:has(> h3):not(:has(> i.fa)) > button {
+    background-color: #dc2626;
+}
+
+#app > div > div:has(> h3):not(:has(> i.fa)) > button:hover {
+    background-color: #b91c1c;
+}
+
+/* Checkout fields */
+#app > div > div:has(> input) {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    max-width: 500px;
+}
+
+/* Checkout labels */
+#app > div > div > label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Input fields */
+input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px #dbeafe;
+}
+
+/* Validation error messages */
+.error-message {
+    color: #dc2626;
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+/* Order confirmation message */
+#app > div > p {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+/* Tablet responsive design */
+@media screen and (max-width: 900px) {
+    #app > div > div:has(> i.fa) {
+        width: calc(50% - 16px);
+    }
+}
+
+/* Mobile responsive design */
+@media screen and (max-width: 600px) {
+    body {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    #app > div > div:has(> i.fa) {
+        width: 100%;
+        margin: 8px 0;
+    }
+
+    select {
+        display: block;
+        width: 100%;
+        margin: 10px 0 20px;
+    }
+
+    button {
+        width: 100%;
+    }
+}
